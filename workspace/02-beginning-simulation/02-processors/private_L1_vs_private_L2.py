@@ -1,6 +1,5 @@
 from gem5.components.boards.simple_board import SimpleBoard
-from gem5.components.cachehierarchies.classic.private_l1_cache_hierarchy import PrivateL1CacheHierarchy
-from gem5.components.memory.single_channel import SingleChannelDDR3_1600
+from gem5.components.cachehierarchies.classic.private_l1_cache_hierarchy import PrivateL1PrivateL2CacheHierarchy
 from gem5.components.processors.cpu_types import CPUTypes
 from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.isas import ISA
@@ -13,7 +12,6 @@ from gem5.simulate.simulator import Simulator
     # https://resources.gem5.org/resources/riscv-getting-started-benchmark-suite?version=1.0.0
 
 workload = obtain_resource("riscv-matrix-multiply-run")
-board.set_workload(workload)
 
 #Instantiate and set parameters
 cache1 = PrivateL1SharedL2CacheHierarchy(
@@ -25,7 +23,7 @@ cache1 = PrivateL1SharedL2CacheHierarchy(
     l2_assoc = 16
 )
 
-#plg into board
+#plg into board1
 board = x86Board(
     cache_hierarchy = cache1,
 )
@@ -41,6 +39,11 @@ cache2 = PrivateL1PrivateL2CacheHierarchy(
     lld_assoc = 8,
     lli_assoc = 8,
     l2_assoc = 8
+)
+
+#plg into board2
+board = x86Board(
+    cache_hierarchy = cache2,
 )
 
 board.set_workload(workload)
