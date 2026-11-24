@@ -14,8 +14,6 @@ from gem5.simulate.simulator import Simulator
 
 workload = obtain_resource("riscv-matrix-multiply-run")
 board.set_workload(workload)
-simulator = Simulator(board=board)
-simulator.run()
 
 #Instantiate and set parameters
 cache1 = PrivateL1SharedL2CacheHierarchy(
